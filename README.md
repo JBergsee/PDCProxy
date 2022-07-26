@@ -1,3 +1,3 @@
 # PDCProxy
 
-A description of this package.
+An easy way to integrate with PDC crew scheduling system.
