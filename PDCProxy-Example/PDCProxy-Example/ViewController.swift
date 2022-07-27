@@ -13,6 +13,8 @@ class ViewController: UIViewController {
     
     private var proxy: PDCProxy?
     private var token:String = "no token yet"
+    private var expiryDate:Date = Date()
+    
     @IBOutlet var tv: UITextView!
     
     @IBOutlet var datePicker:UIDatePicker!
@@ -29,7 +31,7 @@ class ViewController: UIViewController {
         self.tv.text = nil
         
         //Create proxy
-        proxy = PDCProxy()
+        proxy = PDCProxy(username: "JL2PDC", password: "mx8581lmhj")
         
         datePicker.timeZone = TimeZone(identifier: "UTC")
         
@@ -56,7 +58,7 @@ class ViewController: UIViewController {
     @IBAction func login() {
         Task {
             do {
-                let (token,time) = try await proxy!.login(username: "JL2PDC", password: "mx8581lmhj")
+                let (token,time) = try await proxy!.login()
                 self.tv.text.append(contentsOf: "Token: \(token)\n\nValidity: \(time)\n")
             } catch {
                 self.tv.text.append(contentsOf: "Error: \(error.localizedDescription)\n\n")

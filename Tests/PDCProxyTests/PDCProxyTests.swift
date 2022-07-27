@@ -15,7 +15,7 @@ class PDCProxyTests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        proxy = PDCProxy()
+        proxy = PDCProxy(username: "JL2PDC", password: "mx8581lmhj")
     }
 
     override func tearDownWithError() throws {
@@ -39,7 +39,8 @@ class PDCProxyTests: XCTestCase {
         
         //Test wrong pwd
         do {
-            let (_, _) = try await proxy.login(username: "No", password: "Neither")
+            let wrongProxy = PDCProxy(username: "No", password: "Neither")
+            let (_, _) = try await wrongProxy.login()
             XCTFail("Got token from wrong password.")
         } catch {
             print("Error thrown correctly: \(error)")
@@ -48,9 +49,10 @@ class PDCProxyTests: XCTestCase {
         }
         //Test correct password
         do {
-            let (token, validity) = try await proxy.login(username: "JL2PDC", password: "mx8581lmhj")
+            let (token, validity) = try await proxy.login()
             XCTAssert(token.count > 50, "No token")
-            XCTAssert(validity > 999999999999, "Short or no validity")
+            print(validity)
+            XCTAssert(validity.timeIntervalSinceNow > 60*59, "Short or no validity")
         } catch {
             XCTFail("Error caught: \(error)")
         }
@@ -62,7 +64,7 @@ class PDCProxyTests: XCTestCase {
         
         do {
             //login first
-            _ = try await proxy.login(username: "JL2PDC", password: "mx8581lmhj")
+            _ = try await proxy.login()
             let keys = try await proxy.getFlightLegKeys(crewCode: "JNY", date: dof)
             XCTAssert(keys.count == 2, "No flights")
         } catch {
@@ -76,7 +78,7 @@ class PDCProxyTests: XCTestCase {
         let myCode = "JNY"
         
         //login first
-        _ = try! await proxy.login(username: "JL2PDC", password: "mx8581lmhj")
+        _ = try! await proxy.login()
         
         do {
             //wrong flight

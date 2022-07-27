@@ -9,10 +9,15 @@ import Foundation
 
 public class PDCProxy {
     
-    var token: String?
-    var timeLimit: Double?
+    private var username: String
+    private var password: String
     
-    public init() {
+    private var token: String?
+    private var timeLimit: Double?
+    
+    public init(username: String, password: String) {
+        self.username = username
+        self.password = password
     }
     
     public func version() async throws -> PDCVersion {
@@ -35,8 +40,8 @@ public class PDCProxy {
         })
     }
     
-    public func login(username:String, password:String, crewmember:Bool = false) async throws -> (token: String, timeLimit:Double) {
-        return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<(String,Double), Error>) in
+    public func login(crewmember:Bool = false) async throws -> (token: String, expiry: Date) {
+        return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<(String,Date), Error>) in
             
             LoginRequest(params: LoginParams(username: username, password: password, crewmemberLogin: crewmember))
                 .dispatch(
@@ -44,7 +49,8 @@ public class PDCProxy {
                         //Save token and timeOffset
                         self.token = successResponse.result.authentication
                         self.timeLimit = successResponse.result.limit
-                        continuation.resume(returning: (successResponse.result.authentication, successResponse.result.limit))
+                        let expiryDate = Date(timeIntervalSince1970: (self.timeLimit ?? 0)/1000)
+                        continuation.resume(returning: (successResponse.result.authentication, expiryDate))
                     },
                     onFailure: { (errorResponse, error) in
                         //Check the error and rethrow correct one

@@ -94,8 +94,8 @@ extension PDCAPIRequest {
         onError: ((_: E?, _: Error) -> Void)) {
             
             if let data = dataOrNil {
-                print("Received data:")
-                print(String(data: data, encoding: .utf8) ?? "Unable to turn data to string.")
+                //print("Received data:")
+                //print(String(data: data, encoding: .utf8) ?? "Unable to turn data to string.")
                 do {
                     let decodedResponse = try JSONDecoder().decode(T.self, from: data)
                     onSuccess(decodedResponse)
