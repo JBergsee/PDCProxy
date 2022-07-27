@@ -18,14 +18,14 @@ struct PDCCrewList: Codable {
 // MARK: - CCXCrewAsg
 
 public class PDCCrew: Codable, CustomStringConvertible {
-    let crewCode: String
+    public let crewCode: String
+    public let fullName: String
+    public let position: String
+    public let pic: Bool
+    public var takeoffFlying, takeoffMonitoring, approachFlying, approachMonitoring, touchdownFlying, touchdownMonitoring: Bool
+    let lineCheck, pass: [JSONAny]
     let done: [JSONAny]
     let dutyCode: String?
-    let fullName: String
-    let lineCheck, pass: [JSONAny]
-    let pic: Bool
-    let position: String
-    var takeoffFlying, takeoffMonitoring, approachFlying, approachMonitoring, touchdownFlying, touchdownMonitoring: Bool
 
     init(crewCode: String,
          fullName: String,
