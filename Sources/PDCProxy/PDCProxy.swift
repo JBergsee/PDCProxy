@@ -157,13 +157,14 @@ public class PDCProxy {
     }
     
     //Returns false if takeoff or landing pilot not found
-    public static func fix(crew: inout [PDCCrew], takeOffPilot: String, landingPilot: String) -> Bool {
+    public static func setPFPM(crew: inout [PDCCrew], takeOffPilot: String, landingPilot: String) -> Bool {
         
         var pfTO: Bool = false
         var pfLDG: Bool = false
         
         for i in 0...crew.count-1 {
-            if crew[i].fullName == takeOffPilot {
+            //Takeoff
+            if crew[i].fullName.compare(takeOffPilot, options: [.caseInsensitive, .diacriticInsensitive]) == .orderedSame {
                 pfTO = true
                 crew[i].takeoffFlying = true
                 crew[i].takeoffMonitoring = false
@@ -171,7 +172,8 @@ public class PDCProxy {
                 crew[i].takeoffFlying = false
                 crew[i].takeoffMonitoring = true
             }
-            if crew[i].fullName == landingPilot {
+            //Landing
+            if crew[i].fullName.compare(landingPilot, options: [.caseInsensitive, .diacriticInsensitive]) == .orderedSame {
                 pfLDG = true
                 crew[i].approachFlying = true
                 crew[i].approachMonitoring = false

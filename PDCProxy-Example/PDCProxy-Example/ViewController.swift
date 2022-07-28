@@ -88,11 +88,11 @@ class ViewController: UIViewController {
             //Get pilots names
             let takeOffPilot = toField.text ?? ""
             let landingPilot = ldgField.text ?? ""
-            let updated = PDCProxy.fix(crew: &currentCrew!, takeOffPilot: takeOffPilot, landingPilot: landingPilot)
+            let updated = PDCProxy.setPFPM(crew: &currentCrew!, takeOffPilot: takeOffPilot, landingPilot: landingPilot)
             if updated {
                 do {
                     let success = try await proxy!.setLog(key: currentKey!, crew: currentCrew!)
-                    self.tv.text.append(contentsOf: "Update successful \(success)\n")
+                    self.tv.text.append(contentsOf: "Update successful: \(success)\n")
                 } catch {
                     self.tv.text.append(contentsOf: "Error: \(error.localizedDescription)\n\n")
                 }

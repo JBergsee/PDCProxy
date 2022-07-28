@@ -103,12 +103,12 @@ class PDCProxyTests: XCTestCase {
     func testPFPM() {
         let pilot1 = PDCCrew(crewCode: "JNY", fullName: "Johan Bergsee")
         
-        let pilot2 = PDCCrew(crewCode: "XXX", fullName: "Someone Else")
+        let pilot2 = PDCCrew(crewCode: "XXX", fullName: "ÅÄÖ och cASÉ")
         
         
         var crewList = [pilot1,pilot2]
         
-        XCTAssertTrue(PDCProxy.fix(crew: &crewList, takeOffPilot: "Johan Bergsee", landingPilot: "Someone Else"), "Update failed")
+        XCTAssertTrue(PDCProxy.setPFPM(crew: &crewList, takeOffPilot: "Johan Bergsee", landingPilot: "AAO OCH CASE"), "Update failed")
         
         XCTAssert(crewList[0].takeoffFlying == true)
         XCTAssert(crewList[0].takeoffMonitoring == false)
@@ -125,7 +125,7 @@ class PDCProxyTests: XCTestCase {
         XCTAssert(pilot2.touchdownMonitoring == false)
 
         //Test with misspelled name
-        XCTAssertFalse(PDCProxy.fix(crew: &crewList, takeOffPilot: "Johan Bergsee", landingPilot: "Someon Else"), "Update didn't fail! (when it should)")
+        XCTAssertFalse(PDCProxy.setPFPM(crew: &crewList, takeOffPilot: "Johan Bergsee", landingPilot: "AAEOO och cASé"), "Update didn't fail! (when it should)")
         
         XCTAssert(crewList[0].takeoffFlying == true)
         XCTAssert(crewList[0].takeoffMonitoring == false)
