@@ -190,6 +190,12 @@ public class PDCProxy {
     }
     
     private func pdcOffset(_ date: Date) -> Double {
-        return date.timeIntervalSince1970 * 1000
+        //PDC rounds the date to the closest midnight,
+        //so strip time
+        guard let dateOnly = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month, .day], from: date)) else {
+            fatalError("Failed to strip time from Date object")
+        }
+            
+        return dateOnly.timeIntervalSince1970 * 1000
     }
 }

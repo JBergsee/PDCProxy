@@ -26,7 +26,7 @@ class PDCAPIRequest {
         public var errorDescription: String? {
             switch self {
             case .noData:
-                return NSLocalizedString("No data found.", comment: "No data")
+                return NSLocalizedString("PDC found no flight. Please report PF/PM manually.", comment: "No data found in PDC.")
                 
             default:
                 return NSLocalizedString("PDC Error.", comment: "PDC Error")

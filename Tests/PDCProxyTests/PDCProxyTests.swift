@@ -60,12 +60,12 @@ class PDCProxyTests: XCTestCase {
     
     func testGetKeys() async throws {
         let cal = Calendar(identifier: .gregorian)
-        let dof = cal.date(from: DateComponents( year: 2022, month: 7, day: 21))!
+        let dof = cal.date(from: DateComponents( year: 2022, month: 8, day: 7, hour: 20, minute: 40))! //Let time be after UTC midday.
         
         do {
             //login first
             _ = try await proxy.login()
-            let keys = try await proxy.getFlightLegKeys(crewCode: "JNY", date: dof)
+            let keys = try await proxy.getFlightLegKeys(crewCode: "ART", date: dof)
             XCTAssert(keys.count == 2, "No flights")
         } catch {
             XCTFail("Error caught: \(error)")
@@ -74,41 +74,41 @@ class PDCProxyTests: XCTestCase {
     
     func testGetPilotsLog() async throws {
         let cal = Calendar(identifier: .gregorian)
-        let dof = cal.date(from: DateComponents( year: 2022, month: 7, day: 21))!
-        let myCode = "JNY"
+        let dof = cal.date(from: DateComponents( year: 2022, month: 8, day: 7, hour: 20, minute: 40))!
+        let testCode = "ART"
         
         //login first
         _ = try! await proxy.login()
         
         do {
             //wrong flight
-            _ = try await proxy.getLog(flightNbr: "", date: dof, dep: "ARN", dest: "CHQ", crewCode: myCode)
+            _ = try await proxy.getLog(flightNbr: "", date: dof, dep: "CHQ", dest: "BLL", crewCode: testCode)
             XCTFail("Got flight from erroneous data.")
         } catch {
             let failureDescription = error.localizedDescription
             print("Error thrown correctly: \(error)")
-            XCTAssert(failureDescription == "No data found.", "Wrong error")
+            XCTAssert(failureDescription == "PDC found no flight. Please report PF/PM manually.", "Wrong error")
         }
         
         do {
             //existing flight
-            let (_,crewList) = try await proxy.getLog(flightNbr: "", date: dof, dep: "BLL", dest: "ARN", crewCode: myCode)
-            let crew = crewList.first { $0.crewCode == myCode }!
-            XCTAssert(crew.fullName == "Johan Bergsee", "Wrong crew")
+            let (_,crewList) = try await proxy.getLog(flightNbr: "", date: dof, dep: "RHO", dest: "BLL", crewCode: testCode)
+            let crew = crewList.first { $0.crewCode == testCode }!
+            XCTAssert(crew.fullName == "Therese Miles", "Wrong crew")
         } catch {
             XCTFail("Error caught: \(error)")
         }
     }
     
     func testPFPM() {
-        let pilot1 = PDCCrew(crewCode: "JNY", fullName: "Johan Bergsee")
+        let pilot1 = PDCCrew(crewCode: "ART", fullName: "Therese Miles")
         
         let pilot2 = PDCCrew(crewCode: "XXX", fullName: "ÅÄÖ och cASÉ")
         
         
         var crewList = [pilot1,pilot2]
         
-        XCTAssertTrue(PDCProxy.setPFPM(crew: &crewList, takeOffPilot: "Johan Bergsee", landingPilot: "AAO OCH CASE"), "Update failed")
+        XCTAssertTrue(PDCProxy.setPFPM(crew: &crewList, takeOffPilot: "Therese Miles", landingPilot: "AAO OCH CASE"), "Update failed")
         
         XCTAssert(crewList[0].takeoffFlying == true)
         XCTAssert(crewList[0].takeoffMonitoring == false)
@@ -125,7 +125,7 @@ class PDCProxyTests: XCTestCase {
         XCTAssert(pilot2.touchdownMonitoring == false)
 
         //Test with misspelled name
-        XCTAssertFalse(PDCProxy.setPFPM(crew: &crewList, takeOffPilot: "Johan Bergsee", landingPilot: "AAEOO och cASé"), "Update didn't fail! (when it should)")
+        XCTAssertFalse(PDCProxy.setPFPM(crew: &crewList, takeOffPilot: "Therese Miles", landingPilot: "AAEOO och cASé"), "Update didn't fail! (when it should)")
         
         XCTAssert(crewList[0].takeoffFlying == true)
         XCTAssert(crewList[0].takeoffMonitoring == false)
