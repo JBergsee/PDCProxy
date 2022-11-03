@@ -189,13 +189,24 @@ public class PDCProxy {
         return pfTO && pfLDG == true
     }
     
+    ///Transforms a UTC Date and time to PDC `datop`
     private func pdcOffset(_ date: Date) -> Double {
-        //PDC rounds the date to the closest midnight,
-        //so strip time
-        guard let dateOnly = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month, .day], from: date)) else {
+        
+        //PDC rounds the date to the closest midnight, so strip time
+        //We need to use a UTC calendar since the date is provided in UTC.
+        var utcCalendar = Calendar(identifier: .iso8601)
+        utcCalendar.timeZone = TimeZone(identifier: "UTC")!
+        
+        guard let dateOnly = utcCalendar.date(from: utcCalendar.dateComponents([.year, .month, .day], from: date)) else {
             fatalError("Failed to strip time from Date object")
         }
-            
-        return dateOnly.timeIntervalSince1970 * 1000
+        
+        let datop: Double = dateOnly.timeIntervalSince1970 * 1000
+        return datop
+    }
+    
+    private func dateFrom(datop: Double) -> Date {
+        let date: Date = Date(timeIntervalSince1970: datop/1000)
+        return date
     }
 }

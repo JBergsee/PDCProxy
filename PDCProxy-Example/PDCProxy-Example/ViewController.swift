@@ -19,6 +19,8 @@ class ViewController: UIViewController {
     
     @IBOutlet var datePicker:UIDatePicker!
     @IBOutlet var codeField:UITextField!
+    @IBOutlet var depField:UITextField!
+    @IBOutlet var destField:UITextField!
     @IBOutlet var toField:UITextField!
     @IBOutlet var ldgField:UITextField!
     
@@ -74,7 +76,7 @@ class ViewController: UIViewController {
                 //Get date from picker
                 let date = datePicker.date
                 let code = codeField.text ?? ""
-                (currentKey, currentCrew) = try await proxy!.getLog(flightNbr: "NVR247", date: date, dep:"ARN", dest:"CHQ", crewCode: code)
+                (currentKey, currentCrew) = try await proxy!.getLog(flightNbr: "", date: date, dep: depField.text ?? "", dest: destField.text ?? "", crewCode: code)
                 self.tv.text.append(contentsOf: "Key: \(currentKey!)\nCrew 1: \(currentCrew!.first!)\nCrew 2: \(currentCrew!.last!)\n")
             } catch {
                 self.tv.text.append(contentsOf: "Error: \(error.localizedDescription)\n\n")

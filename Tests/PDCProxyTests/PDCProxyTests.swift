@@ -60,12 +60,14 @@ class PDCProxyTests: XCTestCase {
     
     func testGetKeys() async throws {
         let cal = Calendar(identifier: .gregorian)
-        let dof = cal.date(from: DateComponents( year: 2022, month: 8, day: 7, hour: 20, minute: 40))! //Let time be after UTC midday.
+        let dof = cal.date(from: DateComponents( year: 2022, month: 10, day: 24, hour: 23, minute: 50))! //Let time be after UTC midday.
+        //The local date is 25th, while UTC date is 24th
+        let crewCode = "HOJ"
         
         do {
             //login first
             _ = try await proxy.login()
-            let keys = try await proxy.getFlightLegKeys(crewCode: "ART", date: dof)
+            let keys = try await proxy.getFlightLegKeys(crewCode: crewCode, date: dof)
             XCTAssert(keys.count == 2, "No flights")
         } catch {
             XCTFail("Error caught: \(error)")
@@ -74,8 +76,11 @@ class PDCProxyTests: XCTestCase {
     
     func testGetPilotsLog() async throws {
         let cal = Calendar(identifier: .gregorian)
-        let dof = cal.date(from: DateComponents( year: 2022, month: 8, day: 7, hour: 20, minute: 40))!
-        let testCode = "ART"
+        let dof = cal.date(from: DateComponents( year: 2022, month: 10, day: 24, hour: 23, minute: 50))!
+        let testCode = "HOJ"
+        let testCrewName = "Joakim Högbom"
+        let testDep = "PVK"
+        let testDest = "CPH"
         
         //login first
         _ = try! await proxy.login()
@@ -92,9 +97,9 @@ class PDCProxyTests: XCTestCase {
         
         do {
             //existing flight
-            let (_,crewList) = try await proxy.getLog(flightNbr: "", date: dof, dep: "RHO", dest: "BLL", crewCode: testCode)
+            let (_,crewList) = try await proxy.getLog(flightNbr: "shouldn't matter", date: dof, dep: testDep, dest: testDest, crewCode: testCode)
             let crew = crewList.first { $0.crewCode == testCode }!
-            XCTAssert(crew.fullName == "Therese Miles", "Wrong crew")
+            XCTAssert(crew.fullName == testCrewName, "Wrong flight")
         } catch {
             XCTFail("Error caught: \(error)")
         }

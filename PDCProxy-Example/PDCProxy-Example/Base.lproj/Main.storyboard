@@ -11,7 +11,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PDC_sender" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PDCProxy_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -41,7 +41,7 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="efM-et-kWg">
-                                <rect key="frame" x="0.0" y="504" width="414" height="358"/>
+                                <rect key="frame" x="0.0" y="446" width="414" height="416"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -57,37 +57,62 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="jup-jO-5qw">
-                                <rect key="frame" x="-410" y="268" width="1234" height="216"/>
+                                <rect key="frame" x="56" y="268" width="302.5" height="158"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Xn1-ek-hKP">
-                                        <rect key="frame" x="0.0" y="0.0" width="1234" height="162"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="302.5" height="50"/>
                                         <subviews>
-                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="hQq-mD-l7P">
-                                                <rect key="frame" x="0.0" y="0.0" width="1388" height="162"/>
+                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="hQq-mD-l7P">
+                                                <rect key="frame" x="0.0" y="0.0" width="186.5" height="50"/>
+                                                <locale key="locale" localeIdentifier="sv"/>
                                             </datePicker>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="CrewCode" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yI7-g6-I5K">
-                                                <rect key="frame" x="1138" y="64" width="96" height="34"/>
+                                                <rect key="frame" x="206.5" y="8" width="96" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" textContentType="date-time"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="K9v-1I-A23">
-                                        <rect key="frame" x="529" y="182" width="176" height="34"/>
+                                        <rect key="frame" x="61" y="70" width="180" height="34"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Takeoff" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9jp-PS-Fpy">
-                                                <rect key="frame" x="0.0" y="0.0" width="76" height="34"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Dep" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9jp-PS-Fpy">
+                                                <rect key="frame" x="0.0" y="0.0" width="80" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" textContentType="date-time"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Landing" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UcA-1O-dhs">
-                                                <rect key="frame" x="96" y="0.0" width="80" height="34"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Dest" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UcA-1O-dhs">
+                                                <rect key="frame" x="100" y="0.0" width="80" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" textContentType="date-time"/>
+                                            </textField>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="UcA-1O-dhs" firstAttribute="width" secondItem="9jp-PS-Fpy" secondAttribute="width" id="CQm-MG-IUm"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="hoD-45-yeo">
+                                        <rect key="frame" x="61" y="124" width="180" height="34"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Takeoff" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IJV-5l-cz3">
+                                                <rect key="frame" x="0.0" y="0.0" width="80" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" textContentType="date-time"/>
+                                            </textField>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Landing" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="leZ-pj-aqF">
+                                                <rect key="frame" x="100" y="0.0" width="80" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" textContentType="date-time"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="IJV-5l-cz3" firstAttribute="leading" secondItem="9jp-PS-Fpy" secondAttribute="leading" id="6Qt-qm-vtp"/>
+                                    <constraint firstItem="leZ-pj-aqF" firstAttribute="trailing" secondItem="UcA-1O-dhs" secondAttribute="trailing" id="7jH-aW-sT6"/>
+                                    <constraint firstItem="IJV-5l-cz3" firstAttribute="width" secondItem="9jp-PS-Fpy" secondAttribute="width" id="Lif-cb-D7k"/>
+                                    <constraint firstItem="leZ-pj-aqF" firstAttribute="width" secondItem="9jp-PS-Fpy" secondAttribute="width" id="ueO-gg-H7R"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -112,6 +137,8 @@
                     <connections>
                         <outlet property="codeField" destination="yI7-g6-I5K" id="q76-yc-zfr"/>
                         <outlet property="datePicker" destination="hQq-mD-l7P" id="XZl-wJ-vfo"/>
+                        <outlet property="depField" destination="9jp-PS-Fpy" id="Acd-ia-oBt"/>
+                        <outlet property="destField" destination="UcA-1O-dhs" id="ZJ2-V7-208"/>
                         <outlet property="ldgField" destination="UcA-1O-dhs" id="EZq-E3-2hD"/>
                         <outlet property="toField" destination="9jp-PS-Fpy" id="vlf-UZ-8gI"/>
                         <outlet property="tv" destination="efM-et-kWg" id="c3J-Rr-bit"/>
